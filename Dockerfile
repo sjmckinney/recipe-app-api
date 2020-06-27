@@ -9,8 +9,17 @@ ENV PYTHONUNBUFFERED 1
 
 # Copy requirements.txt to image
 # and use as basis for pip install
+# Use apk (Alpine Package Manager)
+# to install db client
+# --no-cache directs Docker not to
+# store package registry index on
+# Docker image to keep size to minimum
 COPY ./requirements.txt /requirements.txt
+RUN apk add --update --no-cache postgresql-client
+RUN apk add --update --no-cache postgresql-client --virtual .tmp-build-deps \
+        gcc libc-dev linux-headers postgresql-dev
 RUN pip install -r /requirements.txt
+RUN apk del .tmp-build-deps
 
 # Create app directory in image and copy
 # contents of project app directory to it
