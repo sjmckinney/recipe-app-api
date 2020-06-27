@@ -36,7 +36,7 @@ class ModelTests(TestCase):
                 password='Testpass123'
             )
 
-    def test_create_new_sueruser(self):
+    def test_create_new_superuser(self):
         """Test that created superuser has correct attributes"""
         user = get_user_model().objects.create_superuser(
             email='test@gamil.com',
